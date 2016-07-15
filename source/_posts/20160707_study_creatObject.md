@@ -1,12 +1,12 @@
 ---
 title: 创建对象 
+permalink: createObject
 tags: 
 - js
 categories: 
 - js基础
 ---
 
-# 创建对象
 
 创建对象有很多模式，简单总结一下概念优缺点，方便对比学习。
 
@@ -91,6 +91,8 @@ categories:
 
 prototype就是通过调用构造函数而创建的那个对象实例的原型对象。使用原型对象，不需要再构造函数中定义对象实例的信息，而是可以将这些信息直接添加到到原型对象中。
 
+#### 例1
+
 ```JavaScript
 	function Person(){
 	}
@@ -111,6 +113,64 @@ prototype就是通过调用构造函数而创建的那个对象实例的原型�
 	alert( person1.sayName == person2.sayName ); // true
 ```
 
+将sayName()方法和所有属性添加到Person的prototype属性，构造函数变成空函数。由构造函数创建新对象，新对象的属性和方法是由所有实例**共享**。  
+
+#### 例2
+
+```JavaScript
+	function Person(){
+	}
+
+	Person.prototype.name = "Nicholas";
+	Person.prototype.age = 29;
+	Person.prototype.job = "Software Engineer";
+	Person.prototype.sayName = function(){
+		alert(this.name);
+	}
+
+	var person1 = new Person();
+	var person2 = new Person();
+
+	person1.name = "Greg";
+	alert(person1.name); // "Greg" 来自实例
+	alert(person2.name); // "Nicholas" 来自原型
+```
+
+给对象实例添加的属性会阻止我们访问原型中的那个属性，但不会修改那个属性。即使将这个属性设置为null，也只会在实例中设置这个属性，不会恢复其指向原型的连接。使用**delete**操作符可以完全删除实例属性。  
+
+#### 例3 更简单的原型语法
+
+```
+	function Person(){
+	}
+
+	Person.prototype = {
+		name : "Nicholas",
+		age : 29,
+		job : "Software Engineer",
+		sayName : function(){
+			alert(this.name);
+		}
+	};
+```
+
+用包含所有属性和方法的**对象字面量**来重写原型对象，最终结果一样，但是constructor属性不在指向Person。所以需要指定constructor，确保通过该属性能访问到适当的值，指定以后会导致它的[[Enumerable]特性设置为 true ，变成可枚举。
+
+
+```
+	function Person(){
+	}
+
+	Person.prototype = {
+		constructor : Person, // 指定constructor
+		name : "Nicholas",
+		age : 29,
+		job : "Software Engineer",
+		sayName : function(){
+			alert(this.name);
+		}
+	};
+```
 
 
 
