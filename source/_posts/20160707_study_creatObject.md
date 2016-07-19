@@ -8,7 +8,7 @@ categories:
 ---
 
 
-创建对象有很多模式，简单总结一下概念优缺点，方便对比学习。
+JS高程中介绍的几种创建对象的模式。
 
 ### 工厂模式  
 
@@ -89,9 +89,9 @@ categories:
 
 ### 原型模式
 
-prototype就是通过调用构造函数而创建的那个对象实例的原型对象。使用原型对象，不需要再构造函数中定义对象实例的信息，而是可以将这些信息直接添加到到原型对象中。
+prototype就是通过调用构造函数而创建的那个对象实例的原型对象。使用原型对象，不需要再构造函数中定义对象实例的信息，而是可以将这些信息直接添加到到原型对象中。**原型模式最大的问题在于，原型中所有属性是被很多实例共享的**。
 
-#### 例1
+#### 例1 将信息直接添加到原型对象中
 
 ```JavaScript
 	function Person(){
@@ -115,7 +115,7 @@ prototype就是通过调用构造函数而创建的那个对象实例的原型�
 
 将sayName()方法和所有属性添加到Person的prototype属性，构造函数变成空函数。由构造函数创建新对象，新对象的属性和方法是由所有实例**共享**。  
 
-#### 例2
+#### 例2 实例属性屏蔽原型中同名属性
 
 ```JavaScript
 	function Person(){
@@ -172,7 +172,132 @@ prototype就是通过调用构造函数而创建的那个对象实例的原型�
 	};
 ```
 
+#### 例4 
 
+```
+	var friend = new Person();
 
+	Person.prototype.sayHi = function(){
+		alert("hi");
+	};
 
+	friend.sayHi(); // "hi" (No Problem!)
+```
+
+创建一个Person实例，保存在friend中。调用sayHi的时候，先搜索实例，然后再搜索原型。
+
+```
+	function Person(){
+	}
+
+	var friend = new Person();
+
+	Person.prototype = function(){
+		constructor : Person.
+		name : "Nicholas",
+		age : 29,
+		job : "Software Engineer",
+		sayName : function(){
+			alert(this.name);
+		}
+	};
+
+	friend.sayName(); // error！
+```
+
+出错是因为，friend指向的原型中不包含以这个名字命名的属性。已经创建实例的情况下，重写原型对象会切断现有实例与新原型之间的联系。
+
+### 组合构造函数模式+原型模式
+
+```
+	function Person(name, age, job){
+		this.name = name;
+		this.age = age;
+		this.job = job;
+		this.friends = ["Shelby", "Court"];
+	}
+
+	Person.prototype = {
+		constructor : Person,
+		sayName : function(){
+			alert(this.name);
+		}
+	}
+
+	var person1 = new Person("Nicholas", 29, "Software Engineer");
+	var person2 = new Person("Greg", 27, "Doctor");
+
+	person1.friends.push("Van");
+	alert(person1.friends);  // "Shelby,Court,Van";
+	alert(person2.friends);  // "Shelby,Court"
+	alert(person1.friends === person2.friends);  // false
+	alert(person1.sayName === person2.sayName);  // true
+```
+
+组合模式中，所有实例属性都写在构造函数中，所有的共享属性和方法在原型中定义。
+
+另外还有以下几种创建对象的模式
+
+### 动态原型模式
+
+```
+	function Person(name, age, job){
+
+		//属性
+		this.name = name;
+		this.age = age;
+		this.job = job;
+
+		//方法
+		if(typeof this.sayName != "function"){
+
+			Person.prototype.sayName = function(){
+				alert(this.name);
+			};
+		}
+	}
+
+	var friend = new Person("Nicholas", 29, "Software Engineer");
+	friend.sayName();
+
+```
+
+这里只有在sayName不存在的情况下才会添加到原型中，if代码只有在初次调用构造函数的时候才会执行。使用这个方法时，**不能使用**对象字面量重写原型。
+
+### 寄生构造函数模式
+
+```
+	function Person(name, age, job){
+		var o = new Object();
+		o.name = name;
+		o.age = age;
+		o.job = job;
+		o.sayName = function(){
+			alert(this.name);
+		};
+		return o;
+	}
+```
+
+建议不使用这种模式
+
+### 稳妥构造函数模式
+
+```
+	function Person(name, age, job){
+
+		// 创建要返回的对象
+		var o = new Object();
+		
+		// 可以在这里定义私有变量和函数
+
+		//添加方法
+		o.sayName = function(){
+			alert(this.name);
+		};
+
+		//返回对象
+		return o;
+	}
+```
 
