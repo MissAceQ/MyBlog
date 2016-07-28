@@ -11,6 +11,8 @@ JS高程中介绍了很多继承方式。一般语言都支持两种继承方式
 
 ### 原型链
 
+原型链中，包含引用类型值的原型属性，会被所有实例共享。而且在创建子类实例时，不能向超类型的构造函数中传递参数。所以一般不会单独使用原型链实现继承。
+
 实现原型链有一个基本模式：
 
 ```
@@ -58,6 +60,95 @@ SubType继承了SuperType，SuperType继承了Object。当调用instance.toStrin
 
 #### 原型和实例的关系
 
-> * instanceof操作符
-> * isPrototypeOf()方法
+有两种方法可以确定原型和实例的关系：
+
+> * instanceof操作符 (instance instanceof SuperType)
+> * isPrototypeOf()方法 (SuperType.prototype.isPrototypeOf(instance))
+
+#### 给原型添加方法
+
+```
+	function SuperType(){
+		this.property = true;
+	}
+
+	SuperType.prototype.getSuperValue = function(){
+		return this.property;
+	};
+
+	function SubType(){
+		this.subproperty = false;
+	}
+
+	//继承了SuperType
+	SubType.property = new SuperType();
+
+	//添加新方法
+	SubType.prototype.getSubValue = function(){
+		return this.subproperty;
+	};
+
+	//重写超类型中的方法
+	SubType.prototype.getSuperValue = function(){
+		return false;
+	};
+
+	var instance = new SubType();
+	alert(instance.getSuperValue()); // false
+```
+
+必须在用SuperType的实例替换原型之后，再定义新方法。通过原型链继承时，不能使用对象字面量创建原型方法，会重写原型链，原型被替换成字面量，变成一个Object实例，不再是SuperType实例，导致原型链被切断。
+
+```
+	function SuperType(){
+		this.property = true;
+	}
+
+	SuperType.prototype.getSuperValue = function(){
+		return this.property;
+	};
+
+	function SubType(){
+		this.subproperty = false;
+	}
+
+	//继承了SuperType
+	SubType.property = new SuperType();
+
+	//使用字面量添加新方法，导致上一行代码无效
+	SubType.prototype = {
+		getSubValue : function(){
+			return this.subproperty;
+		},
+
+		someOtherMethod : function(){
+			return false;
+		}
+	};
+
+	//重写超类型中的方法
+	SubType.prototype.getSuperValue = function(){
+		return false;
+	};
+
+	var instance = new SubType();
+	alert(instance.getSuperValue()); // false
+```
+
+### 借用构造函数
+
+基本思想就是，在子类型的构造函数中调用超类型构造函数。
+
+```
+	function SubType(){
+		this.colors = ["red", "blue", "green"];
+	}
+
+	function SubType(){
+		//继承了SuperType
+		SubType.call(this);
+	}
+```
+
+
 

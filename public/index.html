@@ -224,6 +224,163 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/20/inheritance/" itemprop="url">
+                  继承
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">發表於</span>
+            <time itemprop="dateCreated" datetime="2016-07-20T15:03:08+08:00" content="2016-07-20">
+              2016-07-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/js基础/" itemprop="url" rel="index">
+                    <span itemprop="name">js基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/07/20/inheritance/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/07/20/inheritance/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>JS高程中介绍了很多继承方式。一般语言都支持两种继承方式：接口继承和实现继承，接口继承只继承方法签名，实现继承则继承实际的方法。因为函数没有签名，所以ES主要依靠<strong>原型链</strong>完成实现继承。</p>
+<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>实现原型链有一个基本模式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function SuperType()&#123;</div><div class="line">	this.property = true;</div><div class="line">&#125;</div><div class="line"></div><div class="line">SuperType.prototype.getSuperValue = function()&#123;</div><div class="line">	return this.property;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">function SubType()&#123;</div><div class="line">	this.subproperty = false;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 继承了SuperType</div><div class="line">SubType.prototype = new SuperType();</div><div class="line"></div><div class="line">SubType.prototype.getSubValue = function()&#123;</div><div class="line">	return this.subproperty;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">var instance = new SubType();</div><div class="line">alert(instance.getSuperValue()); // true</div></pre></td></tr></table></figure>
+<p>通过创建SuperType的实例，把实例赋值给SubType.prototype实现SubType继承了SuperType，实现本质就是重写原型对象。实例、构造函数、原型对象之间的关系如下图。</p>
+<p><img src="http://o9j22gj41.bkt.clouddn.com/inheritance-1-1.png" alt="instance-function-prototypr"></p>
+<p>instance指向SubType的原型，SubType的原型指向SuperType的原型。instance.constructor现在指向的是SuperType，因为原来的SubType.prototype被重写了。</p>
+<p>上例中调用instance.getSuperValue()会经历三个搜索步骤：<br>(1) 实例<br>(2) SubType.prototype<br>(3) SuperType.prototype</p>
+<h4 id="默认原型"><a href="#默认原型" class="headerlink" title="默认原型"></a>默认原型</h4><p>所有函数的默认原型都是Object的实例，因此默认原型都会包含一个内部指针，指向Object.prototype。完整原型链如下图。</p>
+<p><img src="http://o9j22gj41.bkt.clouddn.com/inheritance-1-2.png" alt="instance-function-prototype"></p>
+<p>SubType继承了SuperType，SuperType继承了Object。当调用instance.toString()时，实际上是调用了Object.prototype中的方法。</p>
+<h4 id="原型和实例的关系"><a href="#原型和实例的关系" class="headerlink" title="原型和实例的关系"></a>原型和实例的关系</h4><blockquote>
+<ul>
+<li>instanceof操作符</li>
+<li>isPrototypeOf()方法</li>
+</ul>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+    
+    <div class="ds-share flat" data-thread-key="2016/07/20/inheritance/" data-title="继承" data-images="/" data-content="success share" data-url="/">
+        <div class="ds-share-inline">
+          <ul  class="ds-share-icons-16" style="margin-top: 30px">
+            
+            
+            <li><span>分享到：</span></li>
+            <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+            <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+            <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+            <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+            <li> <a class="ds-facebook flat" href="javascript:void(0);" data-service="facebook">Facebook</a> </li>
+            <li> <a class="ds-twitter flat" href="javascript:void(0);" data-service="twitter">Twitter</a> </li>
+            
+          </ul>
+          
+        </div>
+     </div>
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+    	
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/15/createObject/" itemprop="url">
                   创建对象
                 </a>
@@ -575,7 +732,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
