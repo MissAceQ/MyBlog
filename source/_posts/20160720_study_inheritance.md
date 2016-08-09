@@ -15,7 +15,7 @@ JS高程中介绍了很多继承方式。一般语言都支持两种继承方式
 
 实现原型链有一个基本模式：
 
-```
+```JavaScript
 	function SuperType(){
 		this.property = true;
 	}
@@ -67,7 +67,7 @@ SubType继承了SuperType，SuperType继承了Object。当调用instance.toStrin
 
 #### 给原型添加方法
 
-```
+```JavaScript
 	function SuperType(){
 		this.property = true;
 	}
@@ -99,7 +99,7 @@ SubType继承了SuperType，SuperType继承了Object。当调用instance.toStrin
 
 必须在用SuperType的实例替换原型之后，再定义新方法。通过原型链继承时，不能使用对象字面量创建原型方法，会重写原型链，原型被替换成字面量，变成一个Object实例，不再是SuperType实例，导致原型链被切断。
 
-```
+```JavaScript
 	function SuperType(){
 		this.property = true;
 	}
@@ -139,7 +139,7 @@ SubType继承了SuperType，SuperType继承了Object。当调用instance.toStrin
 
 基本思想就是，在子类型的构造函数中调用超类型构造函数。用这种方法就存在构造函数模式的问题，在构造函数里定义的方法，无法复用。
 
-```
+```JavaScript
 	function SuperType(){
 		this.colors = ["red", "blue", "green"];
 	}
@@ -161,7 +161,7 @@ SubType继承了SuperType，SuperType继承了Object。当调用instance.toStrin
  
 相对于原型链，构造函数的一个优势就是，可以在子类构造函数中向超类构造函数**传递参数**。  
 
-```
+```JavaScript
 	function SuperType(name) {
 		this.name = name;
 	}
@@ -185,7 +185,7 @@ SubType继承了SuperType，SuperType继承了Object。当调用instance.toStrin
 
 组合继承也存在问题，会调用两次超类型构造函数：一次是在创建子类型原型的时候，另一次是在子类型构造函数内部。
 
-```
+```JavaScript
 	function SuperType(name) {
 		this.name = name;
 		this.colors = ["red", "blue", "green"];
@@ -231,7 +231,7 @@ SubType继承了SuperType，SuperType继承了Object。当调用instance.toStrin
 
 基本思想：借助原型可以基于已有的对象创建新对象，同事不需要创建自定义类型。ES5新增Object.create()方法规范了原型式继承。这个方法接收两个参数：一个用作新对象原型的对象和一个为新对象定义额外属性的对象(可选)。
 
-```
+```JavaScript
 	var person = {
 		name: "Nicholas",
 		friends: ["Shelby", "Court", "Van"]
@@ -250,7 +250,7 @@ SubType继承了SuperType，SuperType继承了Object。当调用instance.toStrin
 
 Object.create()方法的第二个参数格式是，每个属性通过自己的描述符定义。这种方式指定的属性会覆盖原型对象上的同名属性。例如：
 
-```
+```JavaScript
 	var person = {
 		name: "Nicholas",
 		friends: ["Shelby", "Court", "Van"]
@@ -269,7 +269,7 @@ Object.create()方法的第二个参数格式是，每个属性通过自己的�
 
 基本思想：创建一个只用来封装继承过程的函数，在函数内部以某种方式来增强对象，然后像真的做了所有工作一样返回对象。这种模式跟构造函数模式类似，不能函数复用。
 
-```
+```JavaScript
 	function createAnother(original) {
 		var clone = Object(original); // 通过调用函数创建一个新对象
 		clone.sayHi = function(){ // 以某种方式增强这个对象
@@ -296,7 +296,7 @@ Object.create()方法的第二个参数格式是，每个属性通过自己的�
 
 基本思想：本质上，就是使用寄生式继承超类型的原型，然后再将结果指定给子类型的原型。
 
-```
+```JavaScript
 	function inheritPrototype(subType， superType){
 		var prototype = Object(superType.prototype); // 创建对象
 		prototype.constructor = subType; // 创建对象

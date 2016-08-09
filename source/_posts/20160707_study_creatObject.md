@@ -83,7 +83,7 @@ JS高程中介绍的几种创建对象的模式。
 
 **注**：不同实例上的同名函数是不相等的。
 
-```
+```JavaScript
 	alert( person1.sayName == person2.sayName ); // false
 ```
 
@@ -140,7 +140,7 @@ prototype就是通过调用构造函数而创建的那个对象实例的原型�
 
 #### 例3 更简单的原型语法
 
-```
+```JavaScript
 	function Person(){
 	}
 
@@ -157,7 +157,7 @@ prototype就是通过调用构造函数而创建的那个对象实例的原型�
 用包含所有属性和方法的**对象字面量**来重写原型对象，最终结果一样，但是constructor属性不在指向Person。所以需要指定constructor，确保通过该属性能访问到适当的值，指定以后会导致它的[[Enumerable]特性设置为 true ，变成可枚举。
 
 
-```
+```JavaScript
 	function Person(){
 	}
 
@@ -174,7 +174,7 @@ prototype就是通过调用构造函数而创建的那个对象实例的原型�
 
 #### 例4 
 
-```
+```JavaScript
 	var friend = new Person();
 
 	Person.prototype.sayHi = function(){
@@ -186,7 +186,7 @@ prototype就是通过调用构造函数而创建的那个对象实例的原型�
 
 创建一个Person实例，保存在friend中。调用sayHi的时候，先搜索实例，然后再搜索原型。
 
-```
+```JavaScript
 	function Person(){
 	}
 
@@ -209,7 +209,7 @@ prototype就是通过调用构造函数而创建的那个对象实例的原型�
 
 ### 组合构造函数模式+原型模式
 
-```
+```JavaScript
 	function Person(name, age, job){
 		this.name = name;
 		this.age = age;
@@ -240,7 +240,7 @@ prototype就是通过调用构造函数而创建的那个对象实例的原型�
 
 ### 动态原型模式
 
-```
+```JavaScript
 	function Person(name, age, job){
 
 		//属性
@@ -266,7 +266,7 @@ prototype就是通过调用构造函数而创建的那个对象实例的原型�
 
 ### 寄生构造函数模式
 
-```
+```JavaScript
 	function Person(name, age, job){
 		var o = new Object();
 		o.name = name;
@@ -283,7 +283,7 @@ prototype就是通过调用构造函数而创建的那个对象实例的原型�
 
 ### 稳妥构造函数模式
 
-```
+```JavaScript
 	function Person(name, age, job){
 
 		// 创建要返回的对象
