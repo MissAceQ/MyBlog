@@ -224,6 +224,223 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/19/createObject/" itemprop="url">
+                  浏览器渲染过程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">發表於</span>
+            <time itemprop="dateCreated" datetime="2016-08-19T14:03:44+08:00" content="2016-08-19">
+              2016-08-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/js基础/" itemprop="url" rel="index">
+                    <span itemprop="name">js基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/19/createObject/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/19/createObject/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>面试常常被问到的一个问题就是，从输入网址到出现页面的过程。在这个过程里，就前端而言，最重要的部分就是渲染。那么不同浏览器使用的渲染引擎是不一样的，不同渲染引擎的渲染过程也会有一定差异，但大致过程是一致的。</p>
+<p>Firefox, Safari两种浏览器构建于两种渲染引擎之上：</p>
+<pre><code>1. Firefox使用Gecko——Mozilla自家的渲染引擎。  
+2. Safari和 Chrome 都使用Webkit。
+</code></pre><p>渲染的主要流程如下：</p>
+<p>解析html以构建dom树 -&gt; 构建render树 -&gt; 布局render树 -&gt; 绘制render树</p>
+<ol>
+<li>计算CSS样式</li>
+<li>构建Render Tree</li>
+<li>Layout – 定位坐标和大小，是否换行，各种position, overflow, z-index属性 ……</li>
+<li>正式开画</li>
+</ol>
+<h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>首先，浏览器会解析三个东西：</p>
+<ol>
+<li>HTML/SVG/XHTML，生成<strong>DOM Tree</strong>；</li>
+<li>CSS，产生规则树，<strong>CSS Rule Tree</strong>；</li>
+<li>JS，通过DOM API和CSSOM API操作DOM Tree和CSS Rule Tree。</li>
+</ol>
+<h4 id="DOM解析"><a href="#DOM解析" class="headerlink" title="DOM解析"></a>DOM解析</h4><p>一个常规的HTML会有html、head、title、body、div等标签，将它们解析会生成DOM Tree，由dom元素及属性节点组成，树的根是document对象。解析出的DOM Tree是下图的样子：</p>
+<p><img src="http://o9j22gj41.bkt.clouddn.com/20160819_study_render_DOMTree.png" alt="DOM-Tree"></p>
+<h4 id="CSS解析"><a href="#CSS解析" class="headerlink" title="CSS解析"></a>CSS解析</h4><p>CSS解析将css文件解析为样式表对象,每个对象包含css规则，css规则对象包含选择器和声明对象，以及其他一些符合css语法的对象。Webkit使用Flex和Bison解析生成器从CSS语法文件中自动生成解析器。Bison创建一个自底向上的解析器，Firefox使用自顶向下解析器。</p>
+<h5 id="Webkit"><a href="#Webkit" class="headerlink" title="Webkit"></a>Webkit</h5><p>Webkit解析CSS如下图：</p>
+<p><img src="http://o9j22gj41.bkt.clouddn.com/20160819_study_render_WebkitCSSTree.png" alt="Webkit-CSS-Tree"></p>
+<h5 id="Firefox"><a href="#Firefox" class="headerlink" title="Firefox"></a>Firefox</h5><p>Firefox解析CSS的过程是，比照着DOM Tree和CSS Rule Tree，得到一个叫Style Context Tree。</p>
+<pre><code>注意：
+
+CSS匹配DOM Tree主要是从右到左解析CSS的Selector。CSS匹配HTML元素是一个相当复杂和有性能问题的事情。
+
+所以，DOM树要小，CSS尽量用id和class，千万不要过渡层叠下去。
+</code></pre><p>Style Context Tree如下图。</p>
+<p><img src="http://o9j22gj41.bkt.clouddn.com/20160819_study_render_FirefoxCSSTree.png" alt="Firefox-CSS-Tree"></p>
+<h3 id="构造Rendering-Tree"><a href="#构造Rendering-Tree" class="headerlink" title="构造Rendering Tree"></a>构造Rendering Tree</h3><p>在解析完成以后，浏览器引擎会通过DOM Tree和CSS Rule Tree，构造Rendering Tree。</p>
+<p>Firefox基本上来说是通过CSS解析生成CSS Rule Tree，然后，通过比对DOM Tree生成Style Context Tree，之后把Style Context Tree和Render Tree（Frame Tree）关联上，就完成了。</p>
+<pre><code>注意：
+
+1. Rendering Tree 渲染树并不等同于DOM树，因为一些像Header或display:none的东西就没必要放在渲染树中了；
+
+2. CSS 的 Rule Tree主要是为了完成匹配并把CSS Rule附加上Rendering Tree上的每个Element，也就是DOM结点。也就是所谓的Frame；
+
+3. 计算每个Frame（也就是每个Element）的位置，这又叫layout和reflow过程
+</code></pre><h3 id="绘制"><a href="#绘制" class="headerlink" title="绘制"></a>绘制</h3><p>最后，根据定位，调用操作系统的Native GUI的API可以绘制页面。</p>
+<h3 id="Reflow和Repaint"><a href="#Reflow和Repaint" class="headerlink" title="Reflow和Repaint"></a>Reflow和Repaint</h3><p>渲染过程有两个重要概念，<strong>Reflow</strong>和<strong>Repaint</strong>。</p>
+<ol>
+<li>Repaint：屏幕的一部分要重画，比如某个CSS的背景色变了。但是元素的几何尺寸没有变。  </li>
+<li><p>Reflow(Layout)：元件的几何尺寸变了，我们需要重新验证并计算Render Tree。Render Tree的一部分或全部发生了变化。</p>
+<p> (1) HTML使用的是flow based layout，也就是流式布局，所以，如果某元件的几何尺寸发生了变化，需要重新布局(reflow)。  </p>
+<p> (2) reflow 会从<html>这个root frame开始递归往下，依次计算所有的结点几何尺寸和位置，在reflow过程中，可能会增加一些frame，比如一个文本字符串必需被包装起来。</html></p>
+</li>
+</ol>
+<p>所以，Reflow的成本比Repaint的成本高得多的多。</p>
+<h4 id="增加成本的动作："><a href="#增加成本的动作：" class="headerlink" title="增加成本的动作："></a>增加成本的动作：</h4><ol>
+<li>增加、删除、修改DOM结点时，会导致Reflow或Repaint；  </li>
+<li>移动DOM的位置，或是做一个动画的时候；  </li>
+<li>修改CSS样式的时候；  </li>
+<li>Resize窗口（移动端没有这个问题），或是滚动的时候；  </li>
+<li>修改网页的默认字体时。</li>
+</ol>
+<p>需要注意的是</p>
+<pre><code>注意：
+
+display:none会触发reflow，而visibility:hidden只会触发repaint，因为没有发现位置变化。
+</code></pre><h4 id="reflow原因："><a href="#reflow原因：" class="headerlink" title="reflow原因："></a>reflow原因：</h4><ol>
+<li>Initial。网页初始化的时候。</li>
+<li>Incremental。一些Javascript在操作DOM Tree时。</li>
+<li>Resize。其些元件的尺寸变了。</li>
+<li>StyleChange。如果CSS的属性发生变化了。</li>
+<li>Dirty。几个Incremental的reflow发生在同一个frame的子树上。</li>
+</ol>
+<h3 id="减少reflow-repaint"><a href="#减少reflow-repaint" class="headerlink" title="减少reflow/repaint"></a>减少reflow/repaint</h3><ol>
+<li>不要一条一条地修改DOM的样式。与其这样，还不如预先定义好css的class，然后修改DOM的className。</li>
+<li>把DOM离线后修改。<br> (1) 使用documentFragment对象在内存里操作DOM。<br> (2) 先把DOM给display:none(有一次reflow)，然后再做修改。比如修改100次，然后再把他显示出来。<br> (3) clone一个DOM结点到内存里，再做修改，改完以后，和在线的那个的交换一下。   </li>
+<li>不要把DOM结点的属性值放在一个循环里当成循环里的变量，不然这会导致大量地读写这个结点的属性。    </li>
+<li>尽可能的修改层级比较低的DOM。<br> 改变层级比较底的DOM有可能会造成大面积的reflow，但是也可能影响范围很小。</li>
+<li>为动画的HTML元件使用fixed或absoult的position，那么修改他们的CSS是不会reflow的。  </li>
+<li>千万不要使用table布局。因为可能很小的一个小改动会造成整个table的重新布局。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+    
+    <div class="ds-share flat" data-thread-key="2016/08/19/createObject/" data-title="浏览器渲染过程" data-images="/" data-content="success share" data-url="/">
+        <div class="ds-share-inline">
+          <ul  class="ds-share-icons-16" style="margin-top: 30px">
+            
+            
+            <li><span>分享到：</span></li>
+            <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+            <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+            <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+            <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+            <li> <a class="ds-facebook flat" href="javascript:void(0);" data-service="facebook">Facebook</a> </li>
+            <li> <a class="ds-twitter flat" href="javascript:void(0);" data-service="twitter">Twitter</a> </li>
+            
+          </ul>
+          
+        </div>
+     </div>
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+    	
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/09/Closures/" itemprop="url">
                   闭包
                 </a>
@@ -919,7 +1136,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -936,7 +1153,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">標籤</span>
               </a>
             </div>
