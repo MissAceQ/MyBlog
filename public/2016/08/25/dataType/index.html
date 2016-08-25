@@ -1,0 +1,739 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+<link href="/css/googlefont.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="js," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="面试常遇到的问题之一，js基本数据类型有哪几种，每次都回答五种，但是其实ES6中新增了一种。。。还有关于Null和undefined的具体考察。
+数据类型
+Undefined
+Null
+Boolean
+Number
+String
+Symbol (ES6新定义的)
+Object
+
+前六种是原始类型，就是基本类型，再加一种更复杂的Object类型。
+Null和Undefined的区别Undefined">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据类型">
+<meta property="og:url" content="https://MissAceQ.github.io/2016/08/25/dataType/index.html">
+<meta property="og:site_name" content="MissAceQ">
+<meta property="og:description" content="面试常遇到的问题之一，js基本数据类型有哪几种，每次都回答五种，但是其实ES6中新增了一种。。。还有关于Null和undefined的具体考察。
+数据类型
+Undefined
+Null
+Boolean
+Number
+String
+Symbol (ES6新定义的)
+Object
+
+前六种是原始类型，就是基本类型，再加一种更复杂的Object类型。
+Null和Undefined的区别Undefined">
+<meta property="og:updated_time" content="2016-08-25T09:33:21.249Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据类型">
+<meta name="twitter:description" content="面试常遇到的问题之一，js基本数据类型有哪几种，每次都回答五种，但是其实ES6中新增了一种。。。还有关于Null和undefined的具体考察。
+数据类型
+Undefined
+Null
+Boolean
+Number
+String
+Symbol (ES6新定义的)
+Object
+
+前六种是原始类型，就是基本类型，再加一种更复杂的Object类型。
+Null和Undefined的区别Undefined">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 数据类型 | MissAceQ </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <!----------- add Fork me on Github ------------>
+    
+    
+    
+    <!----------- add Fork me on Github ------------> 
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MissAceQ</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">现在永远是最好的时候</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+        
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据类型
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">發表於</span>
+            <time itemprop="dateCreated" datetime="2016-08-25T15:19:28+08:00" content="2016-08-25">
+              2016-08-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/js基础/" itemprop="url" rel="index">
+                    <span itemprop="name">js基础</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/js基础/面经/" itemprop="url" rel="index">
+                    <span itemprop="name">面经</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/25/dataType/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/25/dataType/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          <span>&nbsp; | &nbsp;
+            <span id="busuanzi_value_page_pv" ></span>次阅读
+          </span>
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>面试常遇到的问题之一，js基本数据类型有哪几种，每次都回答五种，但是其实ES6中新增了一种。。。还有关于Null和undefined的具体考察。</p>
+<h3 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h3><ol>
+<li>Undefined</li>
+<li>Null</li>
+<li>Boolean</li>
+<li>Number</li>
+<li>String</li>
+<li><strong>Symbol</strong> (ES6新定义的)</li>
+<li>Object</li>
+</ol>
+<p>前六种是原始类型，就是基本类型，再加一种更复杂的Object类型。</p>
+<h3 id="Null和Undefined的区别"><a href="#Null和Undefined的区别" class="headerlink" title="Null和Undefined的区别"></a>Null和Undefined的区别</h3><h4 id="Undefined"><a href="#Undefined" class="headerlink" title="Undefined"></a>Undefined</h4><p>表示本来应该有，但是没有，代表了一个不存在的值(non-existence of a value)。</p>
+<ol>
+<li>声明变量时<strong>没有定义初始值</strong>，就有一个默认值Undefined。  </li>
+<li>当试图<strong>访问一个不存在的对象</strong>属性或数组项时，返回一个undefined值。  </li>
+<li>如果<strong>省略了函数的返回语句</strong>,返回undefined。  </li>
+<li><strong>函数调用时未提供的值</strong>结果将为undefined参数值。  </li>
+<li>void操作符也可以返回一个undefined值。像Underscore的库使用它作为一个防御式的类型检查，因为它是不可变的，可以在任何上下文依赖返回undefined。  </li>
+<li>undefined是一个预定义的全局变量(不像null关键字)初始化为undefined值。</li>
+</ol>
+<h4 id="Null"><a href="#Null" class="headerlink" title="Null"></a>Null</h4><p>值Null是一个JS字面量，表示空值(null or an “empty” value)，没有对象被3呈现(no object is present)。通常用作一个空引用一个空对象的预期,就像一个占位符。</p>
+<ol>
+<li>DOM，它是独立于语言的，不属于ECMAScript规范的范围。因为它是一个外部API，试图获取一个不存在的元素返回一个null值，而不是undefined。  </li>
+<li>如果需要给一个变量/属性指定一个不变值，将它传递给一个函数，或者从一个函数返回null(<strong>函数返回null，也算有返回值</strong>)，null几乎总是最好的选择。</li>
+<li>通过分配null值，有效地清除引用，并假设对象没有引用其他代码，指定垃圾收集，确保回收内存。  </li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">s</span>(<span class="params">num</span>) </span>&#123;</div><div class="line">	<span class="keyword">this</span>.num = num;</div><div class="line">	sayNum: <span class="function"><span class="keyword">function</span>(<span class="params">num</span>) </span>&#123;</div><div class="line">		alert(num);</div><div class="line">	&#125;;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> sayNum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么执行以下代码以后，结果如何？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> s = <span class="keyword">new</span> s(<span class="number">0</span>); <span class="comment">// 返回一个function</span></div><div class="line"><span class="keyword">var</span> s1 = s(<span class="number">1</span>); <span class="comment">// undefined</span></div></pre></td></tr></table></figure>
+<p>实际上，因为s所代表的function并没有return，但是s1已经声明，所以s1的结果是undefined。</p>
+<h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h3><h4 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h4><p>整数可以通过十进制、八进制、十六进制的字面值表示</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> intNum = <span class="number">55</span>; <span class="comment">// 十进制</span></div><div class="line"><span class="keyword">var</span> octalNum = <span class="number">070</span>; <span class="comment">// 八进制，第一位必须为0，解析成56</span></div><div class="line"><span class="keyword">var</span> octalNum = <span class="number">079</span>; <span class="comment">// 无效，9超过了8，解析成79</span></div><div class="line"><span class="keyword">var</span> hexNum = <span class="number">0xA</span>; <span class="comment">// 十六进制，前两位必须是0x，解析成10</span></div></pre></td></tr></table></figure>
+<h4 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h4><ol>
+<li>数值必须包含一个小数点，小数点后面必须有一个数字，如果小数点后面只有0，这个小数会被转化成整数。  </li>
+<li>浮点数占用的内存空间是整数的两倍。  </li>
+<li>对极大极小的浮点数用e表示法。  </li>
+</ol>
+<h4 id="NaN"><a href="#NaN" class="headerlink" title="NaN"></a>NaN</h4><ol>
+<li>0/0返回NaN（其他数除以0返回Infinity）。</li>
+<li>任何涉及到NaN的操作都会返回NaN，比如 NaN==NaN 会返回false，但是ES6通过Object.is修正了这个问题，Object.is(NaN,NaN) 返回true。</li>
+<li>isNaN()，这个函数可以用来判断参数是否“不是数值”，涉及到数值转换问题。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">isNaN</span>(<span class="string">"10"</span>); <span class="comment">// 返回true，字符串“10”可以转换成数值10。  </span></div><div class="line"><span class="built_in">isNaN</span>(<span class="string">"blue"</span>); <span class="comment">// 返回false，字符串“blue”无法转换成数值，所以返回false。</span></div></pre></td></tr></table></figure>
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a>String</h3><h4 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h4><p>除了Null和Undefined，每个值都有这个方法。一般使用的时候不需要传递参数，调用数值的toString()方法的时候，可以传递基数，默认是10，代表十进制。</p>
+<h4 id="String-1"><a href="#String-1" class="headerlink" title="String()"></a>String()</h4><p>这个函数可以将任何类型的值转换成字符串，包括Null转换成”null”，undefined转换成”undefined”。</p>
+<h3 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean"></a>Boolean</h3><p>Boolean类型只有两个值：true和false。</p>
+<h4 id="Boolean-1"><a href="#Boolean-1" class="headerlink" title="Boolean()"></a>Boolean()</h4><p>这个函数可以将其他类型的值转换成为布尔类型。</p>
+<h4 id="转换规则"><a href="#转换规则" class="headerlink" title="转换规则"></a>转换规则</h4><ol>
+<li>false：””(空字符串)、0、null、undefined</li>
+<li>true：非空字符串、非零数字值、任何对象、(undefined不适用)</li>
+</ol>
+<h3 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h3><p>Symbol，表示独一无二的值。</p>
+<p>Symbol值通过Symbol函数生成。这就是说，对象的属性名现在可以有两种类型，一种是原来就有的字符串，另一种就是新增的Symbol类型。凡是属性名属于Symbol类型，就都是独一无二的，可以保证不会与其他属性名产生冲突。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> s = <span class="built_in">Symbol</span>();</div><div class="line"><span class="keyword">typeof</span> s; <span class="comment">// "Symbol"</span></div></pre></td></tr></table></figure>
+<p>Symbol函数<strong>不能使用new命令</strong>，否则会报错。这是因为生成的Symbol是一个原始类型的值，不是对象。也就是说，由于Symbol值不是对象，所以不能添加属性。基本上，它是一种类似于字符串的数据类型。</p>
+<p>Symbol函数可以接受一个字符串作为参数，Symbol函数的参数只是表示对当前Symbol值的描述，因此相同参数的Symbol函数的返回值是不相等的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 没有参数的情况</span></div><div class="line"><span class="keyword">var</span> s1 = <span class="built_in">Symbol</span>();</div><div class="line"><span class="keyword">var</span> s2 = <span class="built_in">Symbol</span>();</div><div class="line"></div><div class="line">s1 === s2; <span class="comment">// false</span></div><div class="line"></div><div class="line"><span class="comment">// 有参数的情况</span></div><div class="line"><span class="keyword">var</span> s1 = <span class="built_in">Symbol</span>(<span class="string">"foo"</span>);</div><div class="line"><span class="keyword">var</span> s2 = <span class="built_in">Symbol</span>(<span class="string">"foo"</span>);</div><div class="line"></div><div class="line">s1 === s2; <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<p>Symbol值不能与其他类型的值进行运算，但是，Symbol值可以显式转为字符串，也可以转为布尔值，但是不能转为数值。</p>
+<h3 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h3><ol>
+<li>这个类型实例化的对象，实际上是一组数据和function的集合。  </li>
+<li>实例化对象的过程有两种，一种是通过new操作符，一种是通过对象字面量表示法。</li>
+<li>可以在Object类型基础上继承出更多的类型，Array、function、Date等。</li>
+<li>这些统称为引用类型，在声明一个引用类型的时候，将实例化对象地址存到栈内存中，然后通过地址访问堆内存。js中，函数的参数都是值传递的，而对于js内的引用类型，其值，也就默认为栈内存中的地址。(注意传值和传引用的区别)</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag">#js</a>
+          
+        </div>
+      
+
+    
+    <div class="ds-share flat" data-thread-key="2016/08/25/dataType/" data-title="数据类型" data-images="/" data-content="success share" data-url="/">
+        <div class="ds-share-inline">
+          <ul  class="ds-share-icons-16" style="margin-top: 30px">
+            
+            
+            <li><span>分享到：</span></li>
+            <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+            <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+            <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+            <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+            <li> <a class="ds-facebook flat" href="javascript:void(0);" data-service="facebook">Facebook</a> </li>
+            <li> <a class="ds-twitter flat" href="javascript:void(0);" data-service="twitter">Twitter</a> </li>
+            
+          </ul>
+          
+        </div>
+     </div>
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/19/render/" rel="next" title="浏览器渲染过程">
+                <i class="fa fa-chevron-left"></i> 浏览器渲染过程
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/25/dataType/"
+           data-title="数据类型" data-url="https://MissAceQ.github.io/2016/08/25/dataType/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://o9j22gj41.bkt.clouddn.com/avatar.jpg"
+               alt="MissAceQ" />
+          <p class="site-author-name" itemprop="name">MissAceQ</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分類</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据类型"><span class="nav-number">1.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Null和Undefined的区别"><span class="nav-number">2.</span> <span class="nav-text">Null和Undefined的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Undefined"><span class="nav-number">2.1.</span> <span class="nav-text">Undefined</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Null"><span class="nav-number">2.2.</span> <span class="nav-text">Null</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Number"><span class="nav-number">3.</span> <span class="nav-text">Number</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#整数"><span class="nav-number">3.1.</span> <span class="nav-text">整数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#浮点数"><span class="nav-number">3.2.</span> <span class="nav-text">浮点数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NaN"><span class="nav-number">3.3.</span> <span class="nav-text">NaN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String"><span class="nav-number">4.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#toString-NaN"><span class="nav-number">4.1.</span> <span class="nav-text">toString()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String-1"><span class="nav-number">4.2.</span> <span class="nav-text">String()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean"><span class="nav-number">5.</span> <span class="nav-text">Boolean</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Boolean-1"><span class="nav-number">5.1.</span> <span class="nav-text">Boolean()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#转换规则"><span class="nav-number">5.2.</span> <span class="nav-text">转换规则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Symbol"><span class="nav-number">6.</span> <span class="nav-text">Symbol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object"><span class="nav-number">7.</span> <span class="nav-text">Object</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MissAceQ</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次 &nbsp&nbsp&nbsp
+    您是第<span id="busuanzi_value_site_uv"></span>个来到的小伙伴
+</span>
+
+</div>
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"missaceq"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
