@@ -224,6 +224,156 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/21/slider/" itemprop="url">
+                  轮播图
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">發表於</span>
+            <time itemprop="dateCreated" datetime="2016-09-21T17:19:54+08:00" content="2016-09-21">
+              2016-09-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/js小程序/" itemprop="url" rel="index">
+                    <span itemprop="name">js小程序</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/21/slider/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/21/slider/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="轮播图"><a href="#轮播图" class="headerlink" title="轮播图"></a>轮播图</h3><hr>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>将图片设为左浮动，利用jQuery的<strong>animate</strong>函数，实现向左滑动，再用<strong>setInterval</strong>定时循环执行。</p>
+<h3 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h3><ol>
+<li>给容器设置overflow:hidden十分重要</li>
+<li>点击小圆点时，一定要清除上一次的定时器，重新开始定时器时，要给intervalID重新赋值</li>
+<li>imagebox的宽度要和image的宽度相等，否则循环显示时，就会出现box中有一大一小两张图片</li>
+</ol>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="html"><a href="#html" class="headerlink" title="html"></a>html</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"showbox"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"imagebox"</span>&gt;</span> //放置图片</div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image/1.jpg"</span> <span class="attr">alt</span>=<span class="string">"1.jpg"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image/2.jpg"</span> <span class="attr">alt</span>=<span class="string">"2.jpg"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image/3.jpg"</span> <span class="attr">alt</span>=<span class="string">"3.jpg"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image/4.jpg"</span> <span class="attr">alt</span>=<span class="string">"4.jpg"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"icobox"</span>&gt;</span> //放置图标</div><div class="line">        <span class="tag">&lt;<span class="name">pan</span> <span class="attr">rel</span>=<span class="string">"0"</span> <span class="attr">class</span>=<span class="string">"active"</span>&gt;</span>0<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">rel</span>=<span class="string">"1"</span>&gt;</span>1<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">rel</span>=<span class="string">"2"</span>&gt;</span>2<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">rel</span>=<span class="string">"3"</span>&gt;</span>3<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="css"><a href="#css" class="headerlink" title="css"></a>css</h4><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">.showbox &#123;</div><div class="line">	position: relative;</div><div class="line">	height: 300px;</div><div class="line">	width: 570px;</div><div class="line">	overflow: hiden;   // 关键</div><div class="line">	border: 10px solid #eee;</div><div class="line">	background-color: #eee;</div><div class="line">	border-radius: 10px;</div><div class="line">	-webkit-border-radius:10px;</div><div class="line">    -moz-border-radius:10px;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.imagebox &#123;</div><div class="line">	position: relative;</div><div class="line">	height: 270px;</div><div class="line">	width: 570px;   //宽度与img的一致</div><div class="line">	top: 0;</div><div class="line">	left: 5px;</div><div class="line">	overflow: hiden;   // 关键</div><div class="line">&#125;</div><div class="line"></div><div class="line">.imagebox img &#123;</div><div class="line">	display: block;</div><div class="line">	width: 570px;   // 宽度与imagebox的一致</div><div class="line">	height: 270px;</div><div class="line">	float: left;   //设置为左浮动</div><div class="line">&#125;</div><div class="line"></div><div class="line">.iconbox &#123;</div><div class="line">	position: absolute;</div><div class="line">	border: none;</div><div class="line">	width: 120px;</div><div class="line">	height: 12px;</div><div class="line">	left: 220px;</div><div class="line">	bottom: 10px;</div><div class="line">	text-align: center;</div><div class="line">	line-height: 40px;</div><div class="line">	overflow: hiden;   // 关键</div><div class="line">&#125;</div><div class="line"></div><div class="line">.iconbox span &#123;</div><div class="line">	background: url("../imag/.png") 0 0 no-repeat; //css sprite实现变色</div><div class="line">	width: 12px;</div><div class="line">	height: 12px;</div><div class="line">	cursor: pointer;</div><div class="line">	float: left;</div><div class="line">	margin-left: 3px;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.icobox span.active&#123;</div><div class="line">    background: url("../image/ico.png") 0px -12px no-repeat; //css sprite实现变色</div><div class="line">    cursor: default;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> imagebox=$(<span class="string">".showbox"</span>).children(<span class="string">'.imagebox'</span>)[<span class="number">0</span>],<span class="comment">//获得图片容器</span></div><div class="line">        icobox=$(<span class="string">".showbox"</span>).children(<span class="string">'.icobox'</span>)[<span class="number">0</span>],<span class="comment">//获得图标容器</span></div><div class="line">        ico=$(icobox).children(<span class="string">'span'</span>),<span class="comment">//获得图标数组</span></div><div class="line">        imagenum=$(imagebox).children().size(),<span class="comment">//获得图片数量</span></div><div class="line">        imageboxWidth=$(imagebox).width(),<span class="comment">//获得图片容器的宽度</span></div><div class="line">        imagewidth=imageboxWidth*imagenum,<span class="comment">//获得图片的总宽度</span></div><div class="line">        activeID = <span class="built_in">parseInt</span>($($(icobox).children(<span class="string">".active"</span>)[<span class="number">0</span>] ).attr(<span class="string">"rel"</span>)),<span class="comment">//获得激活的图标ID</span></div><div class="line">        nextID=<span class="number">0</span>,<span class="comment">//下一个图标的ID</span></div><div class="line">        intervalID,<span class="comment">//setInterval()函数的ID</span></div><div class="line">        delaytime=<span class="number">4000</span>,<span class="comment">//延迟的时间</span></div><div class="line">        speed=<span class="number">700</span>;<span class="comment">//执行速度</span></div><div class="line">        $(imagebox).css(&#123;<span class="string">'width'</span> : imagewidth + <span class="string">"px"</span>&#125;);<span class="comment">//将图片容器的宽度设置为图片总宽度</span></div><div class="line"></div><div class="line">        <span class="keyword">var</span> rotate=<span class="function"><span class="keyword">function</span>(<span class="params">clickID</span>) </span>&#123; <span class="comment">//图片滑动函数</span></div><div class="line">            <span class="keyword">if</span> (clickID+<span class="number">1</span>)&#123; <span class="comment">//有下一张图片</span></div><div class="line">                nextID=clickID;</div><div class="line">            &#125;<span class="keyword">else</span>&#123; <span class="comment">//没有下一张则从头开始</span></div><div class="line">                nextID=(activeID+<span class="number">1</span>)%<span class="number">4</span>;</div><div class="line">            &#125;;</div><div class="line">            $(ico[activeID]).removeClass(<span class="string">'active'</span>);</div><div class="line">            $(ico[nextID]).addClass(<span class="string">'active'</span>);</div><div class="line">            $(imagebox).animate(&#123;left:<span class="string">"-"</span>+nextID*imageboxWidth+<span class="string">"px"</span>&#125;, speed);<span class="comment">//jQuery中的animate函数</span></div><div class="line">            activeID=nextID;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        intervalID=setInterval(rotate,delaytime);<span class="comment">//循环函数</span></div><div class="line"></div><div class="line">        $.each(ico, <span class="function"><span class="keyword">function</span>(<span class="params">index, val</span>) </span>&#123;</div><div class="line">            $(<span class="keyword">this</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">                clearInterval(intervalID);<span class="comment">//清楚之前的定时任务（关键！！！）</span></div><div class="line">                 <span class="keyword">var</span> clickID = index;   <span class="comment">// （关键！！！）</span></div><div class="line">                 rotate(clickID);<span class="comment">//运行一次带参数的rotate函数</span></div><div class="line">                 intervalID = setInterval(rotate,delaytime);</div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+    
+    <div class="ds-share flat" data-thread-key="2016/09/21/slider/" data-title="轮播图" data-images="/" data-content="success share" data-url="/">
+        <div class="ds-share-inline">
+          <ul  class="ds-share-icons-16" style="margin-top: 30px">
+            
+            
+            <li><span>分享到：</span></li>
+            <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+            <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+            <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+            <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+            <li> <a class="ds-facebook flat" href="javascript:void(0);" data-service="facebook">Facebook</a> </li>
+            <li> <a class="ds-twitter flat" href="javascript:void(0);" data-service="twitter">Twitter</a> </li>
+            
+          </ul>
+          
+        </div>
+     </div>
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+    	
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/29/httpStatusCode/" itemprop="url">
                   HTTP状态码
                 </a>
@@ -1818,7 +1968,7 @@ display:none会触发reflow，而visibility:hidden只会触发repaint，因为�
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">文章</span>
             </a>
           </div>
@@ -1826,7 +1976,7 @@ display:none会触发reflow，而visibility:hidden只会触发repaint，因为�
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分類</span>
               </a>
             </div>

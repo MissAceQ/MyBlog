@@ -1,0 +1,660 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+<link href="/css/googlefont.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="js," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="轮播图
+思路将图片设为左浮动，利用jQuery的animate函数，实现向左滑动，再用setInterval定时循环执行。
+要点
+给容器设置overflow:hidden十分重要
+点击小圆点时，一定要清除上一次的定时器，重新开始定时器时，要给intervalID重新赋值
+imagebox的宽度要和image的宽度相等，否则循环显示时，就会出现box中有一大一小两张图片
+
+实现html1234567">
+<meta property="og:type" content="article">
+<meta property="og:title" content="轮播图">
+<meta property="og:url" content="https://MissAceQ.github.io/2016/09/21/slider/index.html">
+<meta property="og:site_name" content="MissAceQ">
+<meta property="og:description" content="轮播图
+思路将图片设为左浮动，利用jQuery的animate函数，实现向左滑动，再用setInterval定时循环执行。
+要点
+给容器设置overflow:hidden十分重要
+点击小圆点时，一定要清除上一次的定时器，重新开始定时器时，要给intervalID重新赋值
+imagebox的宽度要和image的宽度相等，否则循环显示时，就会出现box中有一大一小两张图片
+
+实现html1234567">
+<meta property="og:updated_time" content="2016-09-21T09:42:47.859Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="轮播图">
+<meta name="twitter:description" content="轮播图
+思路将图片设为左浮动，利用jQuery的animate函数，实现向左滑动，再用setInterval定时循环执行。
+要点
+给容器设置overflow:hidden十分重要
+点击小圆点时，一定要清除上一次的定时器，重新开始定时器时，要给intervalID重新赋值
+imagebox的宽度要和image的宽度相等，否则循环显示时，就会出现box中有一大一小两张图片
+
+实现html1234567">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 轮播图 | MissAceQ </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <!----------- add Fork me on Github ------------>
+    
+    
+    
+    <!----------- add Fork me on Github ------------> 
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MissAceQ</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">现在永远是最好的时候</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+        
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                轮播图
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">發表於</span>
+            <time itemprop="dateCreated" datetime="2016-09-21T17:19:54+08:00" content="2016-09-21">
+              2016-09-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/js小程序/" itemprop="url" rel="index">
+                    <span itemprop="name">js小程序</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/21/slider/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/21/slider/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          <span>&nbsp; | &nbsp;
+            <span id="busuanzi_value_page_pv" ></span>次阅读
+          </span>
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="轮播图"><a href="#轮播图" class="headerlink" title="轮播图"></a>轮播图</h3><hr>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>将图片设为左浮动，利用jQuery的<strong>animate</strong>函数，实现向左滑动，再用<strong>setInterval</strong>定时循环执行。</p>
+<h3 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h3><ol>
+<li>给容器设置overflow:hidden十分重要</li>
+<li>点击小圆点时，一定要清除上一次的定时器，重新开始定时器时，要给intervalID重新赋值</li>
+<li>imagebox的宽度要和image的宽度相等，否则循环显示时，就会出现box中有一大一小两张图片</li>
+</ol>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="html"><a href="#html" class="headerlink" title="html"></a>html</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"showbox"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"imagebox"</span>&gt;</span> //放置图片</div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image/1.jpg"</span> <span class="attr">alt</span>=<span class="string">"1.jpg"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image/2.jpg"</span> <span class="attr">alt</span>=<span class="string">"2.jpg"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image/3.jpg"</span> <span class="attr">alt</span>=<span class="string">"3.jpg"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image/4.jpg"</span> <span class="attr">alt</span>=<span class="string">"4.jpg"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"icobox"</span>&gt;</span> //放置图标</div><div class="line">        <span class="tag">&lt;<span class="name">pan</span> <span class="attr">rel</span>=<span class="string">"0"</span> <span class="attr">class</span>=<span class="string">"active"</span>&gt;</span>0<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">rel</span>=<span class="string">"1"</span>&gt;</span>1<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">rel</span>=<span class="string">"2"</span>&gt;</span>2<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">rel</span>=<span class="string">"3"</span>&gt;</span>3<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="css"><a href="#css" class="headerlink" title="css"></a>css</h4><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">.showbox &#123;</div><div class="line">	position: relative;</div><div class="line">	height: 300px;</div><div class="line">	width: 570px;</div><div class="line">	overflow: hiden;   // 关键</div><div class="line">	border: 10px solid #eee;</div><div class="line">	background-color: #eee;</div><div class="line">	border-radius: 10px;</div><div class="line">	-webkit-border-radius:10px;</div><div class="line">    -moz-border-radius:10px;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.imagebox &#123;</div><div class="line">	position: relative;</div><div class="line">	height: 270px;</div><div class="line">	width: 570px;   //宽度与img的一致</div><div class="line">	top: 0;</div><div class="line">	left: 5px;</div><div class="line">	overflow: hiden;   // 关键</div><div class="line">&#125;</div><div class="line"></div><div class="line">.imagebox img &#123;</div><div class="line">	display: block;</div><div class="line">	width: 570px;   // 宽度与imagebox的一致</div><div class="line">	height: 270px;</div><div class="line">	float: left;   //设置为左浮动</div><div class="line">&#125;</div><div class="line"></div><div class="line">.iconbox &#123;</div><div class="line">	position: absolute;</div><div class="line">	border: none;</div><div class="line">	width: 120px;</div><div class="line">	height: 12px;</div><div class="line">	left: 220px;</div><div class="line">	bottom: 10px;</div><div class="line">	text-align: center;</div><div class="line">	line-height: 40px;</div><div class="line">	overflow: hiden;   // 关键</div><div class="line">&#125;</div><div class="line"></div><div class="line">.iconbox span &#123;</div><div class="line">	background: url("../imag/.png") 0 0 no-repeat; //css sprite实现变色</div><div class="line">	width: 12px;</div><div class="line">	height: 12px;</div><div class="line">	cursor: pointer;</div><div class="line">	float: left;</div><div class="line">	margin-left: 3px;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.icobox span.active&#123;</div><div class="line">    background: url("../image/ico.png") 0px -12px no-repeat; //css sprite实现变色</div><div class="line">    cursor: default;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> imagebox=$(<span class="string">".showbox"</span>).children(<span class="string">'.imagebox'</span>)[<span class="number">0</span>],<span class="comment">//获得图片容器</span></div><div class="line">        icobox=$(<span class="string">".showbox"</span>).children(<span class="string">'.icobox'</span>)[<span class="number">0</span>],<span class="comment">//获得图标容器</span></div><div class="line">        ico=$(icobox).children(<span class="string">'span'</span>),<span class="comment">//获得图标数组</span></div><div class="line">        imagenum=$(imagebox).children().size(),<span class="comment">//获得图片数量</span></div><div class="line">        imageboxWidth=$(imagebox).width(),<span class="comment">//获得图片容器的宽度</span></div><div class="line">        imagewidth=imageboxWidth*imagenum,<span class="comment">//获得图片的总宽度</span></div><div class="line">        activeID = <span class="built_in">parseInt</span>($($(icobox).children(<span class="string">".active"</span>)[<span class="number">0</span>] ).attr(<span class="string">"rel"</span>)),<span class="comment">//获得激活的图标ID</span></div><div class="line">        nextID=<span class="number">0</span>,<span class="comment">//下一个图标的ID</span></div><div class="line">        intervalID,<span class="comment">//setInterval()函数的ID</span></div><div class="line">        delaytime=<span class="number">4000</span>,<span class="comment">//延迟的时间</span></div><div class="line">        speed=<span class="number">700</span>;<span class="comment">//执行速度</span></div><div class="line">        $(imagebox).css(&#123;<span class="string">'width'</span> : imagewidth + <span class="string">"px"</span>&#125;);<span class="comment">//将图片容器的宽度设置为图片总宽度</span></div><div class="line"></div><div class="line">        <span class="keyword">var</span> rotate=<span class="function"><span class="keyword">function</span>(<span class="params">clickID</span>) </span>&#123; <span class="comment">//图片滑动函数</span></div><div class="line">            <span class="keyword">if</span> (clickID+<span class="number">1</span>)&#123; <span class="comment">//有下一张图片</span></div><div class="line">                nextID=clickID;</div><div class="line">            &#125;<span class="keyword">else</span>&#123; <span class="comment">//没有下一张则从头开始</span></div><div class="line">                nextID=(activeID+<span class="number">1</span>)%<span class="number">4</span>;</div><div class="line">            &#125;;</div><div class="line">            $(ico[activeID]).removeClass(<span class="string">'active'</span>);</div><div class="line">            $(ico[nextID]).addClass(<span class="string">'active'</span>);</div><div class="line">            $(imagebox).animate(&#123;left:<span class="string">"-"</span>+nextID*imageboxWidth+<span class="string">"px"</span>&#125;, speed);<span class="comment">//jQuery中的animate函数</span></div><div class="line">            activeID=nextID;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        intervalID=setInterval(rotate,delaytime);<span class="comment">//循环函数</span></div><div class="line"></div><div class="line">        $.each(ico, <span class="function"><span class="keyword">function</span>(<span class="params">index, val</span>) </span>&#123;</div><div class="line">            $(<span class="keyword">this</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123;</div><div class="line">                clearInterval(intervalID);<span class="comment">//清楚之前的定时任务（关键！！！）</span></div><div class="line">                 <span class="keyword">var</span> clickID = index;   <span class="comment">// （关键！！！）</span></div><div class="line">                 rotate(clickID);<span class="comment">//运行一次带参数的rotate函数</span></div><div class="line">                 intervalID = setInterval(rotate,delaytime);</div><div class="line">            &#125;);</div><div class="line">        &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag">#js</a>
+          
+        </div>
+      
+
+    
+    <div class="ds-share flat" data-thread-key="2016/09/21/slider/" data-title="轮播图" data-images="/" data-content="success share" data-url="/">
+        <div class="ds-share-inline">
+          <ul  class="ds-share-icons-16" style="margin-top: 30px">
+            
+            
+            <li><span>分享到：</span></li>
+            <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+            <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+            <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+            <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+            <li> <a class="ds-facebook flat" href="javascript:void(0);" data-service="facebook">Facebook</a> </li>
+            <li> <a class="ds-twitter flat" href="javascript:void(0);" data-service="twitter">Twitter</a> </li>
+            
+          </ul>
+          
+        </div>
+     </div>
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/29/httpStatusCode/" rel="next" title="HTTP状态码">
+                <i class="fa fa-chevron-left"></i> HTTP状态码
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/21/slider/"
+           data-title="轮播图" data-url="https://MissAceQ.github.io/2016/09/21/slider/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://o9j22gj41.bkt.clouddn.com/avatar.jpg"
+               alt="MissAceQ" />
+          <p class="site-author-name" itemprop="name">MissAceQ</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分類</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#轮播图"><span class="nav-number">1.</span> <span class="nav-text">轮播图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#要点"><span class="nav-number">3.</span> <span class="nav-text">要点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">4.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#html"><span class="nav-number">4.1.</span> <span class="nav-text">html</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#css"><span class="nav-number">4.2.</span> <span class="nav-text">css</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JavaScript"><span class="nav-number">4.3.</span> <span class="nav-text">JavaScript</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MissAceQ</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div>
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次 &nbsp&nbsp&nbsp
+    您是第<span id="busuanzi_value_site_uv"></span>个来到的小伙伴
+</span>
+
+</div>
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"missaceq"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
